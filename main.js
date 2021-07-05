@@ -3,6 +3,13 @@ import './style.css'
 import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js'
 import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js'
 //import gsap from 'gsap'
+import * as dat from 'dat.gui'
+
+//constant to define color of the mesh and add to debug
+const parameters = {
+  color:0xff0000
+}
+
 
 // Canvas
 const canvas = document.getElementById('webgl')
@@ -25,10 +32,13 @@ const scene = new THREE.Scene()
  * Objects
  */
 
+
+const material =  new THREE.MeshBasicMaterial({ color: parameters.color, wireframe: true })
 const mesh = new THREE.Mesh(
   new THREE.BoxBufferGeometry(),
-  new THREE.MeshBasicMaterial( { color: 0xffff00 } )
-);
+  material
+)
+ 
 scene.add(mesh)
 
 // const group = new THREE.Group()
@@ -64,6 +74,28 @@ const sizes = {
     width: innerWidth,
     height: innerHeight
 }
+
+/**
+ * Debug
+ */
+
+const gui = new dat.GUI()
+
+
+// to move coordinates
+gui.add(mesh.position, 'x', -3, 3, 0.01)
+gui.add(mesh.position, 'y', -3, 3, 0.01)
+gui.add(mesh.position, 'z', -3, 3, 0.01)
+
+// To add Checkbox
+gui.add(mesh, 'visible')
+gui.add(material, 'wireframe')
+
+
+//To add change of colors
+gui.addColor(parameters, 'color').onChange(() => {
+  material.color.set(parameters.color)
+})
 
 /**
  * Camera
