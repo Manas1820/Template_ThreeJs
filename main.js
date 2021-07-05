@@ -3,6 +3,7 @@ import * as THREE from 'three'
 // import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js'
 import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js'
 
+
 // Canvas
 const canvas = document.getElementById('webgl')
 // Scene
@@ -21,8 +22,8 @@ scene.add(axesHelper)
  * Objects
  */
 const group = new THREE.Group()
-group.scale.y = 2
-group.rotation.y = 0.2
+// group.scale.y = 2
+// group.rotation.y = 0.2
 scene.add(group)
 
 const cube1 = new THREE.Mesh(
@@ -86,7 +87,21 @@ addEventListener('mousemove', () => {
   mouse.y = -(event.clientY / innerHeight) * 2 + 1
 })
 
+const clock = new THREE.Clock()
+
+// Animations
+let time = Date.now()
 function animate() {
+  // Calculate the FPS
+  const currentTime = Date.now()
+  let deltaTime = currentTime - time
+  time = currentTime
+
+  //Another method is to use the Three js clock
+  const elaspedTime = clock.getElapsedTime()
+  // cube2.position.y =Math.cos(elaspedTime)
+  // cube3.position.y = Math.sin(elaspedTime)
+
   requestAnimationFrame(animate)
   renderer.render(scene, camera)
   raycaster.setFromCamera(mouse, camera)
