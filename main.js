@@ -3,7 +3,7 @@ import './style.css'
 import * as THREE from 'https://unpkg.com/three@0.126.1/build/three.module.js'
 import { OrbitControls } from 'https://unpkg.com/three@0.126.1/examples/jsm/controls/OrbitControls.js'
 //import gsap from 'gsap'
-import * as dat from 'dat.gui'
+//import * as dat from 'dat.gui'
 
 //constant to define color of the mesh and add to debug
 const parameters = {
@@ -18,6 +18,36 @@ const canvas = document.getElementById('webgl')
 // Scene
 const scene = new THREE.Scene()
 
+/**
+ * Texture Loader
+ */
+
+
+const manager = new THREE.LoadingManager();
+manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+
+	console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+
+};
+
+manager.onLoad =  ( ) => {
+	console.log( 'Loading complete!');
+};
+
+
+manager.onProgress = ( url, itemsLoaded, itemsTotal ) => {
+	console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+};
+
+manager.onError =  ( url ) => {
+	console.log( 'There was an error loading ' + url );
+};
+
+const textureLoader = new THREE.TextureLoader(manager);
+
+// Add a new texture like this const chessBoard = textureLoader.load('checkerboard-8x8.png')
+
+//const  = textureLoader.load('')
 
 
 
@@ -79,6 +109,8 @@ const sizes = {
  * Debug
  */
 
+
+/*
 const gui = new dat.GUI()
 
 
@@ -96,6 +128,8 @@ gui.add(material, 'wireframe')
 gui.addColor(parameters, 'color').onChange(() => {
   material.color.set(parameters.color)
 })
+
+*/
 
 /**
  * Camera
@@ -149,6 +183,7 @@ addEventListener('resize', () => {
 
 // To handle full screen mode
 
+/*
 addEventListener('dblclick', () => {
   const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
   if (!fullscreenElement) {
@@ -166,6 +201,7 @@ addEventListener('dblclick', () => {
 
 })
 
+*/
 
 addEventListener('mousemove', () => {
   mouse.x = (event.clientX / innerWidth) * 2 - 1
